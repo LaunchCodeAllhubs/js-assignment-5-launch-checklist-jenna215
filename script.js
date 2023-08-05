@@ -1,29 +1,21 @@
 // Write your JavaScript code here!
 
-const { myFetch, validateInput, formSubmission } = require("./scriptHelper");
-
-
-const formSubmit = document.getElementById("formSubmit");
-const pilotName = document.getElementById("pilotName");
-const copilotName = document.querySelector("name=copilotName");
-
-
-
 
 window.addEventListener("load", function() {
-    
+const formSubmit = document.querySelector("form");
+const list = document.getElementById("faultyItems")
+
     formSubmit.addEventListener("submit", function(event) {
-        let formField = document.querySelector("input[class=formField]:checked");
         // alert the current value found in the username input
-        if (formField.value === "null") {
-            alert("All fields are required!");
-            event.preventDefault();
-        } else if (pilotName.value || copilotName.value !== "" && !formField.value.trim().match(/^[A-Z a-z 0-9\-]+$/)) {
-            alert("\nPlease enter a single keyword with only letters and/or numbers.");
-        } else {
-            validateInput();
-        }
         event.preventDefault();
+
+        const pilotName = document.querySelector("input[name=pilotName]");
+        const copilotName = document.querySelector("input[name=copilotName]");
+        const fuelLevel = document.querySelector("input[name=fuelLevel]");
+        const cargoMass = document.querySelector("input[name=cargoMass]");
+
+        formSubmission(document, list, pilotName.value, copilotName.value, fuelLevel.value, cargoMass.value);
+
     });
 
     let listedPlanets;
@@ -35,7 +27,8 @@ window.addEventListener("load", function() {
    }).then(function () {
        console.log(listedPlanets);
        // Below this comment call the appropriate helper functions to pick a planet fom the list of planets and add that information to your destination.
-    formSubmission();
+       let planet = pickPlanet(listedPlanets);
+       addDestinationInfo(document, planet.name, planet.diameter, planet.star, planet.distance, planet.moons, planet.image);
     })
 
 });
