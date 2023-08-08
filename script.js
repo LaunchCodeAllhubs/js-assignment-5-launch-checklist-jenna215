@@ -4,7 +4,7 @@
 window.addEventListener("load", function() {
 const formSubmit = document.querySelector("form");
 const list = document.getElementById("faultyItems")
-
+list.style.visibility = "hidden";
     formSubmit.addEventListener("submit", function(event) {
         // alert the current value found in the username input
         event.preventDefault();
